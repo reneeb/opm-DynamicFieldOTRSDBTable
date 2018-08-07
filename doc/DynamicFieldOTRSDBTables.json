@@ -1,0 +1,16 @@
+{
+    "name": "DynamicFieldOTRSDBTable",
+    "version": "6.0.1",
+    "framework": [
+        "6.0.x"
+    ],
+    "vendor": {
+        "name":  "Perl-Services.de",
+        "url": "http://www.perl-services.de"
+    },
+    "license": "GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007",
+    "description" : {
+        "en": "OTRS DB table content in a dropdown DynamicField",
+        "de": "Inhalt einer Tabelle aus der OTRS-DB in einem Dropdown (Dynamisches Feld)"
+    }
+}
