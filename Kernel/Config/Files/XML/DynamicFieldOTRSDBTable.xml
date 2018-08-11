@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="2.0" init="Config">
-    <Setting Name="Frontend::Module###AdminDynamicFieldOTRSDBTabel" Required="0" Valid="1">
+    <Setting Name="Frontend::Module###AdminDynamicFieldOTRSDBTable" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Navigation>Frontend::Admin::ModuleRegistration</Navigation>
         <Value>
@@ -36,6 +36,7 @@
                     <Array>
                         <Item>Core.Agent.Admin.DynamicField.js</Item>
                         <Item>Core.Agent.Admin.DynamicFieldDropdown.js</Item>
+                        <Item>Core.Agent.Admin.SysConfig.Entity.js</Item>
                     </Array>
                 </Item>
             </Hash>
@@ -58,9 +59,9 @@
         <Navigation>Core::DynamicFields::DriverRegistration</Navigation>
         <Value>
             <Hash>
-                <Item Key="DisplayName" Translatable="1">OTRS DB Table</Item>
+                <Item Key="DisplayName" Translatable="1">DB Table</Item>
                 <Item Key="Module">Kernel::System::DynamicField::Driver::OTRSDBTable</Item>
-                <Item Key="ConfigDialog">AdminDynamicFieldOTRSAgents</Item>
+                <Item Key="ConfigDialog">AdminDynamicFieldOTRSDBTable</Item>
             </Hash>
         </Value>
     </Setting>

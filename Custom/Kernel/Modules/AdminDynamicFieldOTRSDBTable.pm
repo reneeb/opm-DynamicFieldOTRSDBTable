@@ -487,6 +487,19 @@ sub _ShowScreen {
         Class         => 'W75pc Validate_Number',
     );
 
+    my %ValidList = $ValidObject->ValidList();
+
+    # create the Validity select
+    my $ValidityStrg = $LayoutObject->BuildSelection(
+        Data         => \%ValidList,
+        Name         => 'ValidID',
+        SelectedID   => $Param{ValidID} || 1,
+        PossibleNone => 0,
+        Translation  => 1,
+        Class        => 'W50pc',
+    );
+
+
     my $ReadonlyInternalField = '';
 
     # Internal fields can not be deleted and name should not change.
@@ -503,18 +516,6 @@ sub _ShowScreen {
 
     # define as 0 to get the real value in the HTML
     my $ParamCounter = 0;
-
-    # create treeview option list
-    $Param{PossibleNoneSelect} = $LayoutObject->BuildSelection(
-        Data => {
-            1 => 'Yes',
-            0 => 'No',
-        },
-        Name       => 'PossibleNone',
-        SelectedID => $Param{PossibleNone} || '0',
-        Translation => 1,
-        Class      => 'W50pc',
-    );
 
     my $Link = $Param{Link} || '';
 

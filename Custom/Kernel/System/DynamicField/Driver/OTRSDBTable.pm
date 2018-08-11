@@ -1,13 +1,12 @@
 # --
-# Kernel/System/DynamicField/Driver/OTRSAgents.pm - Delegate for DynamicField OTRSAgents Driver
-# Copyright (C) 2016 Perl-Services.de, http://perl-services.de
+# Copyright (C) 2018 Perl-Services.de, http://perl-services.de
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::System::DynamicField::Driver::OTRSAgents;
+package Kernel::System::DynamicField::Driver::OTRSDBTable;
 
 use strict;
 use warnings;
@@ -177,12 +176,19 @@ sub PossibleValuesGet {
     return {} if !$Config->{TableName};
     return {} if !$Config->{KeyField};
 
-    $Config->{ValueField} //= $Config->{KeyField};
+    $Config->{ValueField} ||= $Config->{KeyField};
 
     my $SQL = sprintf 'SELECT %s, %s FROM %s', @{ $Config }{qw/KeyField ValueField TableName/};
 
+    my @Binds;
+    if ( defined $Param{Like} ) {
+        $SQL .= sprintf ' WHERE %s LIKE ?', $Config->{KeyField};
+        push @Binds, \"$Param{Like}%";
+    }
+
     return {} if !$DBObject->Prepare(
-        SQL => $SQL,
+        SQL  => $SQL,
+        Bind => \@Binds,
     );
 
     my %List;
@@ -192,7 +198,6 @@ sub PossibleValuesGet {
 
     # set none value if defined on field config
     $List{''} = '-';
-
 
     return \%List;
 }
