@@ -135,7 +135,7 @@
 
                         <label for="NeedsLike">[% Translate("Needs constraint") | html %]:</label>
                         <div class="Field">
-                            <input type="text" name="NeedsLike" id="NeedsLike" value="1" [% IF Data.NeedsLike %]checked="checked"[% END %]>
+                            <input type="checkbox" name="NeedsLike" id="NeedsLike" value="1" [% IF Data.NeedsLike %]checked="checked"[% END %]>
                         </div>
                         <div class="Clear"></div>
 
