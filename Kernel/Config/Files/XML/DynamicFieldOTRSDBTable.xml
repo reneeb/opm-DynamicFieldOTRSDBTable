@@ -22,7 +22,7 @@
             </Item>
         </Value>
     </Setting>
-    <Setting Name="Loader::Module::AdminDynamicFieldOTRSDBTabel###003-DynamicFieldOTRSDBTable" Required="0" Valid="1">
+    <Setting Name="Loader::Module::AdminDynamicFieldOTRSDBTable###003-DynamicFieldOTRSDBTable" Required="0" Valid="1">
         <Description Translatable="1">Loader module registration for the agent interface.</Description>
         <Navigation>Frontend::Admin::ModuleRegistration::Loader</Navigation>
         <Value>
@@ -42,7 +42,7 @@
             </Hash>
         </Value>
     </Setting>
-    <Setting Name="Frontend::Navigation###AdminDynamicFieldOTRSDBTabel###003-DynamicFieldOTRSDBTable" Required="0" Valid="0">
+    <Setting Name="Frontend::Navigation###AdminDynamicFieldOTRSDBTable###003-DynamicFieldOTRSDBTable" Required="0" Valid="0">
         <Description Translatable="1">Main menu item registration.</Description>
         <Navigation>Frontend::Admin::ModuleRegistration::MainMenu</Navigation>
         <Value>
