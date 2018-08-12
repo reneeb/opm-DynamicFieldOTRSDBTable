@@ -176,6 +176,8 @@ sub PossibleValuesGet {
     return {} if !$Config->{TableName};
     return {} if !$Config->{KeyField};
 
+    return {} if $Config->{NeedsLike} && !$Param{Like};
+
     $Config->{ValueField} ||= $Config->{KeyField};
 
     my $SQL = sprintf 'SELECT %s, %s FROM %s', @{ $Config }{qw/KeyField ValueField TableName/};

@@ -34,7 +34,7 @@ sub new {
 
     $Self->{ConfigParams} = [qw(
         ObjectType ObjectTypeName FieldType FieldTypeName ValidID Link
-        PossibleNone TableName KeyField ValueField
+        PossibleNone TableName KeyField ValueField NeedsLike
     )];
 
     return $Self;
@@ -140,7 +140,7 @@ sub _AddAction {
             $DynamicFieldObject->DynamicFieldList(
                 Valid      => 0,
                 ResultType => 'HASH',
-                )
+            ) || {}
         };
 
         %DynamicFieldsList = reverse %DynamicFieldsList;

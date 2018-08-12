@@ -133,6 +133,12 @@
                         </div>
                         <div class="Clear"></div>
 
+                        <label for="NeedsLike">[% Translate("Needs constraint") | html %]:</label>
+                        <div class="Field">
+                            <input type="text" name="NeedsLike" id="NeedsLike" value="1" [% IF Data.NeedsLike %]checked="checked"[% END %]>
+                        </div>
+                        <div class="Clear"></div>
+
                         <label for="Link">[% Translate("Show link") | html %]:</label>
                         <div class="Field">
                             <input id="Link" class="W50pc" type="text" maxlength="500" value="[% Data.Link | html %]" name="Link"/>
