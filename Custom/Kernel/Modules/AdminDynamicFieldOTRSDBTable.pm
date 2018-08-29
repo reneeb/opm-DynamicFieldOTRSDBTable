@@ -32,9 +32,12 @@ sub new {
     $Self->{DuplicateString} = '_DynamicFields_DuplicatedString_Dont_Use_It_String_Please';
     $Self->{DeletedString}   = '_DynamicFields_DeletedString_Dont_Use_It_String_Please';
 
+    $Self->{CommonParams} = [qw(
+        ObjectType ObjectTypeName FieldType FieldTypeName ValidID
+    )];
+
     $Self->{ConfigParams} = [qw(
-        ObjectType ObjectTypeName FieldType FieldTypeName ValidID Link
-        PossibleNone TableName KeyField ValueField NeedsLike
+        PossibleNone TableName KeyField ValueField Limit Link
     )];
 
     return $Self;
@@ -164,7 +167,7 @@ sub _AddAction {
         }
     }
 
-    for my $ConfigParam ( @{ $Self->{ConfigParams} || [] } ) {
+    for my $ConfigParam ( @{ $Self->{ConfigParams} || [] }, @{ $Self->{CommonParams} || [] } ) {
         $GetParam{$ConfigParam} = $ParamObject->GetParam( Param => $ConfigParam );
     }
 
@@ -368,7 +371,7 @@ sub _ChangeAction {
         }
     }
 
-    for my $ConfigParam ( @{ $Self->{ConfigParams} || [] } ) {
+    for my $ConfigParam ( @{ $Self->{ConfigParams} || [] }, @{ $Self->{CommonParams} || [] } ) {
         $GetParam{$ConfigParam} = $ParamObject->GetParam( Param => $ConfigParam );
     }
 

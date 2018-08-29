@@ -20,6 +20,7 @@ our @ObjectDependencies = (
     'Kernel::System::DynamicFieldValue',
     'Kernel::System::Main',
     'Kernel::System::User',
+    'Kernel::System::Cache',
 );
 
 =head1 NAME
@@ -50,6 +51,8 @@ sub new {
     # allocate new hash for object
     my $Self = {};
     bless( $Self, $Type );
+
+    ($Self->{CacheType} = __PACKAGE__) =~ s{::}{}g;
 
     # set field behaviors
     $Self->{Behaviors} = {
@@ -169,14 +172,23 @@ sub ColumnFilterValuesGet {
 sub PossibleValuesGet {
     my ($Self, %Param) = @_;
 
-    my $DBObject = $Kernel::OM->Get('Kernel::System::DB');
+    my $DBObject    = $Kernel::OM->Get('Kernel::System::DB');
+    my $CacheObject = $Kernel::OM->Get('Kernel::System::Cache');
 
     my $Config = $Param{DynamicFieldConfig}->{Config} || {};
+    my $CacheKey = join '::', $Param{DynamicFieldConfig}->{Name}, $Param{Like} // '';
 
-    return {} if !$Config->{TableName};
-    return {} if !$Config->{KeyField};
+    my $Values = $CacheObject->Get(
+        Type => $Self->{CacheType},
+        Key  => $CacheKey,
+    );
 
-    return {} if $Config->{NeedsLike} && !$Param{Like};
+    return $Values if $Values;
+
+    my %List = ('' => '-');
+
+    return \%List if !$Config->{TableName};
+    return \%List if !$Config->{KeyField};
 
     $Config->{ValueField} ||= $Config->{KeyField};
 
@@ -188,18 +200,27 @@ sub PossibleValuesGet {
         push @Binds, \"$Param{Like}%";
     }
 
-    return {} if !$DBObject->Prepare(
+    my %Opts;
+    if ( $Config->{Limit} ) {
+        $Opts{Limit} = $Config->{Limit};
+    }
+
+    return \%List if !$DBObject->Prepare(
         SQL  => $SQL,
         Bind => \@Binds,
+        %Opts,
     );
 
-    my %List;
     while ( my @Row = $DBObject->FetchrowArray() ) {
         $List{ $Row[0] } = $Row[1];
     }
 
-    # set none value if defined on field config
-    $List{''} = '-';
+    $CacheObject->Set(
+        Type  => $Self->{CacheType},
+        Key   => $CacheKey,
+        Value => \%List,
+        TTL   => 60 * 60 * 24 * 1,
+    );
 
     return \%List;
 }
