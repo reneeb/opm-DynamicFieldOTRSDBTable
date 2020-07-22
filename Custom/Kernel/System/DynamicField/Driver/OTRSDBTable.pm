@@ -15,6 +15,8 @@ use Kernel::System::VariableCheck qw(:all);
 
 use base qw(Kernel::System::DynamicField::Driver::BaseSelect);
 
+use Kernel::System::DynamicField::Driver::Multiselect;
+
 our @ObjectDependencies = (
     'Kernel::Config',
     'Kernel::System::DynamicFieldValue',
@@ -25,11 +27,11 @@ our @ObjectDependencies = (
 
 =head1 NAME
 
-Kernel::System::DynamicField::Driver::OTRSAgents
+Kernel::System::DynamicField::Driver::OTRSDBTable
 
 =head1 SYNOPSIS
 
-DynamicFields OTRSAgents Driver delegate
+DynamicFields OTRSDBTable Driver delegate
 
 =head1 PUBLIC INTERFACE
 
@@ -66,7 +68,7 @@ sub new {
 
     # get the Dynamic Field Backend custom extensions
     my $DynamicFieldDriverExtensions
-        = $Kernel::OM->Get('Kernel::Config')->Get('DynamicFields::Extension::Driver::OTRSAgents');
+        = $Kernel::OM->Get('Kernel::Config')->Get('DynamicFields::Extension::Driver::OTRSDBTable');
 
     EXTENSION:
     for my $ExtensionKey ( sort keys %{$DynamicFieldDriverExtensions} ) {
@@ -110,13 +112,94 @@ sub ValueSet {
 
     $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
 
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::ValueSet( %Param );
+    }
+
     return $Self->SUPER::ValueSet( %Param );
 }
+
+sub ValueGet {
+    my ($Self, %Param) = @_;
+
+    $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
+
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::ValueGet( %Param );
+    }
+
+    return $Self->SUPER::ValueGet( %Param );
+}
+
+sub ValueIsDifferent {
+    my ($Self, %Param) = @_;
+
+    $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
+
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::ValueIsDifferent( %Param );
+    }
+
+    return $Self->SUPER::ValueIsDifferent( %Param );
+}
+
+sub ValueValidate {
+    my ($Self, %Param) = @_;
+
+    $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
+
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::ValueValidate( %Param );
+    }
+
+    return $Self->SUPER::ValueValidate( %Param );
+}
+
+sub FieldValueValidate {
+    my ($Self, %Param) = @_;
+
+    $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
+
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::FieldValueValidate( %Param );
+    }
+
+    return $Self->SUPER::FieldValueValidate( %Param );
+}
+
+sub EditFieldRender {
+    my ($Self, %Param) = @_;
+
+    $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
+
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::EditFieldRender( %Param );
+    }
+
+    return $Self->SUPER::EditFieldRender( %Param );
+}
+
+sub EditFieldValueGet {
+    my ($Self, %Param) = @_;
+
+    $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
+
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::EditFieldValueGet( %Param );
+    }
+
+    return $Self->SUPER::EditFieldValueGet( %Param );
+}
+
 
 sub EditFieldValueValidate {
     my ($Self, %Param) = @_;
 
     $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
+
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::EditFieldValueValidate( %Param );
+    }
 
     return $Self->SUPER::EditFieldValueValidate( %Param );
 }
@@ -126,6 +209,10 @@ sub DisplayValueRender {
 
     $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
 
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::DisplayValueRender( %Param );
+    }
+
     return $Self->SUPER::DisplayValueRender( %Param );
 }
 
@@ -133,6 +220,10 @@ sub SearchFieldRender {
     my ($Self, %Param) = @_;
 
     $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
+
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::SearchFieldRender( %Param );
+    }
 
     return $Self->SUPER::SearchFieldRender( %Param );
 }
@@ -142,6 +233,10 @@ sub SearchFieldParameterBuild {
 
     $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
 
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::SearchFieldParameterBuild( %Param );
+    }
+
     return $Self->SUPER::SearchFieldParameterBuild( %Param );
 }
 
@@ -150,13 +245,57 @@ sub StatsFieldParameterBuild {
 
     $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
 
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::StatsFieldParameterBuild( %Param );
+    }
+
     return $Self->SUPER::StatsFieldParameterBuild( %Param );
+}
+
+sub ReadableValueRender {
+    my ($Self, %Param) = @_;
+
+    $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
+
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::ReadableValueRender( %Param );
+    }
+
+    return $Self->SUPER::ReadableValueRender( %Param );
+}
+
+sub TemplateValueTypeGet {
+    my ($Self, %Param) = @_;
+
+    $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
+
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::TemplateValueTypeGet( %Param );
+    }
+
+    return $Self->SUPER::TemplateValueTypeGet( %Param );
+}
+
+sub ObjectMatch {
+    my ($Self, %Param) = @_;
+
+    $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
+
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::ObjectMatch( %Param );
+    }
+
+    return $Self->SUPER::ObjectMatch( %Param );
 }
 
 sub ValueLookup {
     my ($Self, %Param) = @_;
 
     $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
+
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::ValueLookup( %Param );
+    }
 
     return $Self->SUPER::ValueLookup( %Param );
 }
@@ -166,7 +305,35 @@ sub ColumnFilterValuesGet {
 
     $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
 
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::ColumnFilterValuesGet( %Param );
+    }
+
     return $Self->SUPER::ColumnFilterValuesGet( %Param );
+}
+
+sub HistoricalValuesGet {
+    my ($Self, %Param) = @_;
+
+    $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
+
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::HistoricalValuesGet( %Param );
+    }
+
+    return $Self->SUPER::HistoricalValuesGet( %Param );
+}
+
+sub BuildSelectionDataGet {
+    my ($Self, %Param) = @_;
+
+    $Param{DynamicFieldConfig}->{Config}->{PossibleValues} = $Self->PossibleValuesGet( %Param );
+
+    if ( $Param{DynamicFieldConfig}->{Config}->{Multiple} ) {
+        return $Self->Kernel::System::DynamicField::Driver::Multiselect::BuildSelectionDataGet( %Param );
+    }
+
+    return $Self->SUPER::BuildSelectionDataGet( %Param );
 }
 
 sub PossibleValuesGet {

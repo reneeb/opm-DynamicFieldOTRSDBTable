@@ -139,6 +139,18 @@
                         </div>
                         <div class="Clear"></div>
 
+                        <label for="PossibleNone">[% Translate("Add empty value") | html %]:</label>
+                        <div class="Field">
+                            <input type="checkbox" name="PossibleNone" id="PossibleNone" value="1" [% IF Data.PossibleNone %]checked="checked"[% END %]>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="Multiple">[% Translate("Multiselect") | html %]:</label>
+                        <div class="Field">
+                            <input type="checkbox" name="Multiple" id="Multiple" value="1" [% IF Data.Multiple %]checked="checked"[% END %]>
+                        </div>
+                        <div class="Clear"></div>
+
                         <label for="Link">[% Translate("Show link") | html %]:</label>
                         <div class="Field">
                             <input id="Link" class="W50pc" type="text" maxlength="500" value="[% Data.Link | html %]" name="Link"/>
