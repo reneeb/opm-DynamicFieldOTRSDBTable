@@ -1,8 +1,10 @@
 {
     "name": "DynamicFieldOTRSDBTable",
-    "version": "6.0.6",
+    "version": "6.0.7",
     "framework": [
-        "6.0.x"
+        "6.0.x",
+        "6.1.x",
+        "6.2.x"
     ],
     "vendor": {
         "name":  "Perl-Services.de",
@@ -10,7 +12,7 @@
     },
     "license": "GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007",
     "description" : {
-        "en": "OTRS DB table content in a dropdown DynamicField",
-        "de": "Inhalt einer Tabelle aus der OTRS-DB in einem Dropdown (Dynamisches Feld)"
+        "en": "Ticketsystem DB table content in a dropdown DynamicField",
+        "de": "Inhalt einer Tabelle aus der Ticketsystem-DB in einem Dropdown (Dynamisches Feld)"
     }
 }
