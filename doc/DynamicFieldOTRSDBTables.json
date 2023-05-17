@@ -1,19 +1,24 @@
 {
     "name": "DynamicFieldOTRSDBTable",
-    "version": "6.0.8",
+    "version": "6.0.9",
     "framework": [
         "6.0.x",
         "6.1.x",
         "6.2.x",
-        "6.3.x"
+        "6.3.x",
+        "6.4.x",
+        "6.5.x"
     ],
     "vendor": {
         "name":  "Perl-Services.de",
-        "url": "http://www.perl-services.de"
+        "url": "https://www.perl-services.de"
     },
     "license": "GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007",
     "description" : {
         "en": "Ticketsystem DB table content in a dropdown DynamicField",
         "de": "Inhalt einer Tabelle aus der Ticketsystem-DB in einem Dropdown (Dynamisches Feld)"
-    }
+    },
+    "exclude_files" : [
+        "doc/DynamicFieldOTRSDBTables.json"
+    ]
 }
