@@ -37,7 +37,7 @@ sub new {
     )];
 
     $Self->{ConfigParams} = [qw(
-        PossibleNone TableName KeyField ValueField Limit Link Multiple
+        PossibleNone TableName KeyField ValueField Limit Link Multiple TranslatableValues
     )];
 
     return $Self;

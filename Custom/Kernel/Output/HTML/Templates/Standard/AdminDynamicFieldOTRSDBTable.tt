@@ -151,6 +151,12 @@
                         </div>
                         <div class="Clear"></div>
 
+                        <label for="TranslatableValues">[% Translate("Translatable values") | html %]:</label>
+                        <div class="Field">
+                            <input type="checkbox" name="TranslatableValues" id="TranslatableValues" value="1" [% IF Data.TranslatableValues %]checked="checked"[% END %]>
+                        </div>
+                        <div class="Clear"></div>
+
                         <label for="Link">[% Translate("Show link") | html %]:</label>
                         <div class="Field">
                             <input id="Link" class="W50pc" type="text" maxlength="500" value="[% Data.Link | html %]" name="Link"/>
